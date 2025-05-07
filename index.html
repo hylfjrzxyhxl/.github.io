@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>粒子导航</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #0a0a2e;
+            cursor: pointer;
+        }
+        canvas {
+            display: block;
+        }
+        #navPanel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, 80px);
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .nav-link {
+            color: #4df1ff;
+            font-size: 20px;
+            margin: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            padding: 8px 20px;
+            border: 1px solid #4df1ff;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        .nav-link:hover {
+            background: rgba(77, 241, 255, 0.2);
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <div id="navPanel"></div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const navPanel = document.getElementById('navPanel');
+
+        // 配置参数
+        const config = {
+            particleSize: 2,
+            particleColor: '#4df1ff',
+            hoverRadius: 100,
+            friction: 0.15,
+            texts: [
+                {
+                    title: 'AI为友，善用致远',
+                    links: [
+                        { text: 'AI技术', url: 'page_know.html' },
+                        { text: '创新应用', url: 'people.html' },
+                        { text: '发展历程', url: '时间轴.html' },
+                        { text: '未来期望', url: '未来.html' },
+                    ]
+                },
+                {
+                    title: 'AI时代青年如何进步',
+                    links: [
+                        { text: '青年挑战', url: '2.html' },
+                        { text: '青年机遇', url: 'page_moment.html' },
+                        { text: 'AI科学使用', url: 'AI创新.html' },
+                        { text: '学习资源', url: 'learning.html' }
+                        
+                    ]
+                }
+            ],
+            currentText: 0
+        }
+
+        // 初始化设置
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let particles = [];
+        let mouse = { x: null, y: null }
+
+        // 粒子类
+        class Particle {
+            constructor(x, y) {
+                this.originX = x;
+                this.originY = y;
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.density = Math.random() * 5 + 2;
+            }
+
+            draw() {
+                const gradient = ctx.createRadialGradient(
+                    this.x, this.y, 0, 
+                    this.x, this.y, this.size
+                );
+                gradient.addColorStop(0, config.particleColor);
+                gradient.addColorStop(1, 'rgba(77, 241, 255, 0)');
+                
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = gradient;
+                ctx.fill();
+            }
+
+            update() {
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                let force = (config.hoverRadius - distance) / config.hoverRadius;
+                
+                if(distance < config.hoverRadius) {
+                    this.x -= dx * force * 0.1 * this.density;
+                    this.y -= dy * force * 0.1 * this.density;
+                } else {
+                    let dx = this.originX - this.x;
+                    let dy = this.originY - this.y;
+                    this.x += dx * config.friction;
+                    this.y += dy * config.friction;
+                }
+            }
+        }
+
+        // 生成文字粒子
+        function createParticles() {
+            particles = [];
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 绘制临时文字
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 120px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(config.texts[config.currentText].title, canvas.width/2, canvas.height/2);
+
+            // 生成导航菜单
+            navPanel.innerHTML = config.texts[config.currentText].links
+                .map(link => `<a class="nav-link" href="${link.url}" target="_blank">${link.text}</a>`)
+                .join('');
+            navPanel.style.opacity = 1;
+
+            // 生成粒子
+            const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+            for(let y = 0; y < canvas.height; y += 4) {
+                for(let x = 0; x < canvas.width; x += 4) {
+                    const index = (y * canvas.width + x) * 4;
+                    if(pixels[index] > 128) {
+                        particles.push(new Particle(x, y));
+                    }
+                }
+            }
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // 动画循环
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        // 事件监听
+        canvas.addEventListener('mousemove', e => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        canvas.addEventListener('click', () => {
+            config.currentText = (config.currentText + 1) % config.texts.length;
+            createParticles();
+        });
+
+        // 启动
+        createParticles();
+        animate();
+
+        // 窗口自适应
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            createParticles();
+        });
+    </script>
+</body>
+</html>

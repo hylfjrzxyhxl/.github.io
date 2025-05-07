@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>机遇</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui;
+        }
+
+        body {
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        /* 容器样式 */
+        .heroes-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: grid;
+            grid-gap: 30px;
+        }
+
+        /* 人物卡片通用样式 */
+        .hero-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            min-height: 300px;
+            transition: transform 0.4s, box-shadow 0.4s;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 悬停效果 */
+        .hero-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        /* 图片区域 */
+        .image-container {
+            flex: 0 0 35%;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+
+        /* 文字内容 */
+        .content {
+            flex: 1;
+            padding: 0 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h2 {
+            font-size: 2.2em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .title {
+            color: #e74c3c;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        p {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        /* 不同角色的特殊效果 */
+        /* 角色1 - 旋转入场 */
+        .hero-card:nth-child(1) {
+            animation: rotateEntry 1s ease-out;
+        }
+
+        /* 角色2 - 折叠展开 */
+        .hero-card:nth-child(2) .image-container {
+            clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+            animation: unfold 1.2s 0.3s forwards;
+        }
+
+        /* 角色3 - 动态边框 */
+        .hero-card:nth-child(3) {
+            border: 2px solid transparent;
+            animation: borderFlow 3s infinite linear;
+        }
+
+        /* 角色4 - 悬浮照片 */
+        .hero-card:nth-child(4) .image-container {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* 角色5 - 动态背景 */
+        .hero-card:nth-child(5)::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            opacity: 0.1;
+            animation: bgMove 8s infinite linear;
+        }
+
+        /* 关键帧动画 */
+        @keyframes rotateEntry {
+            from {
+                transform: rotateX(90deg) translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: rotateX(0) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes unfold {
+            to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+        }
+
+        @keyframes borderFlow {
+            0% { border-color: #ff6b6b; }
+            50% { border-color: #4ecdc4; }
+            100% { border-color: #ff6b6b; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes bgMove {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .hero-card {
+                flex-direction: column;
+            }
+            .image-container {
+                flex: 0 0 250px;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="heroes-container">
+        <!-- 1 -->
+        <div class="hero-card">
+            <div class="image-container">
+                <img src="./picture/self.jpg" alt="自我">
+            </div>
+            <div class="content">
+                <h2>构建可自我迭代的知识拓扑结构</h2>
+                <div class="title">
+                    "GPU的并行计算正在改写创新规则，但青年真正的加速器是培养跨学科连接的'神经突触'，让知识网络具备自主进化能力。"
+                </div>
+                <p>
+                   2024年浙江大学交叉创新的团队开发出"知识联邦"系统，将机械工程、认知神经科学和强化学习算法编织成动态知识图谱，
+                   在东风汽车产线改造中，系统通过实时吸收工程师经验与传感器数据，自主生成128种故障处置方案，使调试效率提升23倍；
+                    其研发的元学习框架能根据脑电波特征动态调整知识拓扑，当知识节点如CUDA核心般互联，每个学科都成为激活创新链式反应的触发点。
+                </p>
+            </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="hero-card">
+            <div class="image-container">
+                <img src="./picture/use.jpg" alt="操作者">
+            </div>
+            <div class="content">
+                <h2>青年人应成为AI工具的操作者</h2>
+                <div class="title">
+                    "未来的工作形态是人与AI的'混合智能舞蹈'，
+                    青年应掌握编排这种舞蹈的编导思维，而非仅是技术工具的操作者。"
+                </div>
+                <p>
+                    2023年，清华大学交叉信息研究院团队在医疗AI领域实现认知跃迁——他们并未止步于训练病灶识别模型，
+                    而是重新设计人机协作流程：医生仅需在三维影像中标注1%的关键帧，AI自动补全剩余99%的标注并生成诊断建议，
+                    最终人机协同决策准确率达99.2%，较纯人工诊断效率提升17倍。
+                    正如2024年粤港澳大湾区青年创客大赛金奖得主陈默所言：“我们不再问‘AI能做什么’，而是思考‘人类应该在什么维度保留决策权’。”            
+                    
+                </p>
+            </div>
+        </div>
+
+        <!-- 人物3 -->
+        <div class="hero-card">
+            <div class="image-container">
+                <img src="./picture/imgine.jpg" alt="想象力">
+            </div>
+            <div class="content">
+                <h2>AI时代，青年必须掌握用想象力重构问题</h2>
+                <div class="title">
+                    "当算法开始理解语言时，青年必须掌握用想象力重构问题的能力——因为AI擅长优化已知，而人类专属价值在于定义未知。"
+                </div>
+                <p>
+                    2023年清华大学类脑计算中心团队
+                    突破传统脑机接口范式，将敦煌壁画视觉语法与神经编码结合，设计出全球首个"艺术化脑电交互"系统，
+                    使渐冻症患者通过欣赏《飞天》壁画触发特定神经信号完成文字输入，意念转化准确率达90.2%；
+                    更富突破性的是北航空天技术研究院2024年发布的"灵鹊"智能设计框架，学生团队将《考工记》中的传统工艺智慧转化为AI训练语料，
+                    让大模型自主提出新型变体机翼构想，其设计的仿生扑翼无人机气动效率超越波音实验室最优方案17%。
+                    这些青年不再困于既有问题赛道。他们证明：当AI成为基本算力，定义问题的想象力才是划开认知边疆的利刃。
+                
+                </p>
+            </div>
+        </div>
+
+        <!--4 -->
+        <div class="hero-card">
+            <div class="image-container">
+                <img src="./picture/motive.jpg" alt="科学泰斗">
+            </div>
+            <div class="content">
+                <h2>主动学习</h2>
+                <div class="title">
+                    "推荐算法的信息茧房越精密，青年越需要主动设计认知升级的'对抗样本'，在舒适区外构建思维多样性保护区。"
+                </div>
+                <p>
+                    用主动学习对抗算法驯化，浙大脑机接口团队于2024年推出的"神经多样性增强仪"，通过经颅电刺激激发前额叶皮层活跃度，
+                    配合自主设计的"反推荐书单"算法，在杭州亚运村试点中使志愿者跨文化沟通能力提升143%。
+                    这些青年如同2024年获"吴文俊人工智能奖"的中科大团队，他们训练多模态模型将《资本论》与星际争霸战术推演跨界融合，
+                    在算法牢笼中凿出认知裂
+                    缝——正如深圳前海00后开发者联盟用区块链构建"学习DAO"，每个知识节点都需要解锁不同领域内容才能激活，
+                    迫使成员成为算法生态的"免疫细胞"。
+                </p>
+            </div>
+        </div>
+
+        <!-- 人物5 -->
+        <div class="hero-card">
+            <div class="image-container">
+                <img src="./picture/learn.jpg" alt="文物保护者">
+            </div>
+            <div class="content">
+                <h2>深度思考</h2>
+                <div class="title">
+                    "当生物算法与电子算法开始竞争注意力，守护心智主权需要像训练肌肉那样系统锤炼深度思考的'反脆弱性'。"
+                </div>
+                <p>
+                    2024年华东师大附中开设"深度思考训练营"，学生通过解析《资治通鉴》与AlphaGo棋谱培养双轨思维，在脑电监测中显示前额叶活跃度提升230%；
+                   中科院神经所25岁团队研发的"元认知增强仪"，通过经颅磁刺激激活默认模式网络，
+                    配合《周易》推演训练，使航天工程师在卫星故障诊断中的直觉准确率提升89%。这些青年如2024年获得"罗德学者"的复旦团队，
+                    他们用《梦溪笔谈》训练AI对抗性思维，在量子计算领域提出7个颠覆性假设——正如杭州"00后"创客将《心经》空观思想编码为注意力过滤器，
+                    每秒屏蔽6372条无效信息，证明心智主权要靠修行般的认知淬炼。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 图片悬停效果
+        document.querySelectorAll('.image-container').forEach(container => {
+            container.addEventListener('mouseover', () => {
+                container.style.transform = 'rotateY(15deg) scale(1.05)';
+            });
+            container.addEventListener('mouseout', () => {
+                container.style.transform = 'none';
+            });
+        });
+
+        // 滚动动画
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.hero-card').forEach(card => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(50px)';
+            observer.observe(card);
+        });
+
+        // 动态文字颜色
+        const colors = ['#2c3e50', '#e74c3c', '#27ae60', '#2980b9', '#8e44ad'];
+        document.querySelectorAll('h2').forEach((title, index) => {
+            title.style.color = colors[index % colors.length];
+        });
+    </script>
+</body>
+</html>

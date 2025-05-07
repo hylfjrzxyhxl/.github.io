@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>科技案例展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ffffff;
+            font-family: 'Segoe UI', '微软雅黑', sans-serif;
+            line-height: 1.6;
+        }
+
+        /* 案例容器 */
+        .case-container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem 1rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #2d3436;
+            margin-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: #0984e3;
+            margin: 0 auto;
+        }
+
+        /* 案例网格布局 */
+        .case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        /* 案例卡片 */
+        .case-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .case-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        /* 图片区域 */
+        .case-image {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .case-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .case-card:hover .case-image img {
+            transform: scale(1.05);
+        }
+
+        /* 科技标签 */
+        .tech-tag {
+            position: absolute;
+            top: 15px;
+            right: -40px;
+            background: #0984e3;
+            color: white;
+            padding: 8px 40px;
+            font-weight: 600;
+            transform: rotate(45deg);
+            box-shadow: 0 2px 10px rgba(9, 132, 227, 0.3);
+            font-size: 0.9rem;
+        }
+
+        /* 内容区域 */
+        .case-content {
+            padding: 1.5rem;
+        }
+
+        .case-content h3 {
+            color: #2d3436;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            min-height: 3em;
+        }
+
+        .case-content p {
+            color: #636e72;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        /* 底部信息 */
+        .case-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
+        }
+
+        .lab-tag {
+            background: #f8f9fa;
+            color: #0984e3;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .detail-btn {
+            background: #0984e3;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .detail-btn:hover {
+            background: #0873c4;
+            transform: translateY(-2px);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .case-container {
+                padding: 2rem 1rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .case-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .case-image {
+                height: 200px;
+            }
+        }
+
+        /* 加载动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .case-card {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .case-card:nth-child(1) { animation-delay: 0.2s; }
+        .case-card:nth-child(2) { animation-delay: 0.4s; }
+        .case-card:nth-child(3) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <div class="case-container">
+        <div class="section-title">
+            <h2>前沿科技案例</h2>
+        </div>
+        
+        <div class="case-grid">
+                <!-- 案例1 -->
+            <div class="case-card">
+                <div class="case-image">
+                    <img src="./picture/./four.jpg" alt="量子计算">
+                    <div class="tech-tag">量子计算</div>
+                </div>
+                <div class="case-content">
+                    <h3>光子量子计算机原型</h3>
+                    <p>采用新型光子纠缠技术，实现100量子比特稳定操作，运算效率提升百万倍。</p>
+                    <div class="case-footer">
+                        <span class="lab-tag">中科院实验室</span>
+                        <button class="detail-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                            </svg>
+                            详情
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 案例2 -->
+            <div class="case-card">
+                <div class="case-image">
+                    <img src="./picture/all.jpg" alt="脑机接口">
+                    <div class="tech-tag">脑机接口</div>
+                </div>
+                <div class="case-content">
+                    <h3>非侵入式神经解码系统</h3>
+                    <p>采用深度学习算法实现92%准确率的意念控制机械臂系统。</p>
+                    <div class="case-footer">
+                        <span class="lab-tag">斯坦福研究院</span>
+                        <button class="detail-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                            </svg>
+                            详情
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 案例3 -->
+            <div class="case-card">
+                <div class="case-image">
+                    <img src="./picture/2.jpg" alt="太空探索">
+                    <div class="tech-tag">太空科技</div>
+                </div>
+                <div class="case-content">
+                    <h3>核聚变推进火箭引擎</h3>
+                    <p>新型核聚变推进系统使火星航行时间缩短至3个月。</p>
+                    <div class="case-footer">
+                        <span class="lab-tag">SpaceX实验室</span>
+                        <button class="detail-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                            </svg>
+                            详情
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="case-container">
+        <div class="section-title">
+            <h2>前沿科技案例</h2>
+        </div>
+        
+        <div class="case-grid">
+            <!-- 案例1 -->
+            <div class="case-card">
+                <div class="case-image">
+                    <img src="./picture/one.jpg" alt="量子计算">
+                    <div class="tech-tag">量子计算</div>
+                </div>
+                <div class="case-content">
+                    <h3>量子计算芯片散热系统</h3>
+                    <p>采用超流体氦三维冷却技术，使量子比特稳定性提升至99.97%。</p>
+                    <div class="case-footer">
+                        <span class="lab-tag">谷歌量子实验室</span>
+                        <button class="detail-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                            </svg>
+                            详情
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 案例2 -->
+            <div class="case-card">
+                <div class="case-image">
+                    <img src="./picture/two.jpg" alt="脑机接口">
+                    <div class="tech-tag">脑机接口</div>
+                </div>
+                <div class="case-content">
+                    <h3>合成神经突触阵列</h3>
+                    <p>基于有机高分子材料的仿生突触，实现每秒2.8万亿次类脑运算。</p>
+                    <div class="case-footer">
+                        <span class="lab-tag">剑桥神经工程</span>
+                        <button class="detail-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                            </svg>
+                            详情
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 案例3 -->
+            <div class="case-card">
+                <div class="case-image">
+                    <img src="./picture/tech3.jpg" alt="太空探索">
+                    <div class="tech-tag">机器人</div>
+                </div>
+                <div class="case-content">
+                    <h3>超导磁悬浮微创手术机器人</h3>
+                    <p>血管介入定位精度达0.02毫米，手术时间缩短60%。</p>
+                    <div class="case-footer">
+                        <span class="lab-tag">SpaceX实验室</span>
+                        <button class="detail-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                            </svg>
+                            详情
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="case-container">
+        <div class="section-title">
+            <h2>前沿科技案例</h2>
+        </div>
+        
+        <div class="case-grid">
+            <!-- 案例4 -->
+            <div class="case-card">
+                <div class="case-image">
+                    <img src="./picture/three.jpg" alt="量子计算">
+                    <div class="tech-tag">纳米机器人</div>
+                </div>
+                <div class="case-content">
+                    <h3>DNA纳米机器人递药系统</h3>
+                    <p>肿瘤靶向精度达97%，药物释放响应时间控制在30秒内。</p>
+                    <div class="case-footer">
+                        <span class="lab-tag">中科院实验室</span>
+                        <button class="detail-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                            </svg>
+                            详情
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 案例5 -->
+            <div class="case-card">
+                <div class="case-image">
+                    <img src="./picture/imgine.jpg" alt="脑机接口">
+                    <div class="tech-tag">地月通信</div>
+                </div>
+                <div class="case-content">
+                    <h3>地月激光通信中继站</h3>
+                    <p>实现38万公里距离下10TB/日数据传输，误码率低于10⁻¹²。</p>
+                    <div class="case-footer">
+                        <span class="lab-tag">斯坦福研究院</span>
+                        <button class="detail-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                            </svg>
+                            详情
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 案例3 -->
+            <div class="case-card">
+                <div class="case-image">
+                    <img src="./picture/3.jpg" alt="太空探索">
+                    <div class="tech-tag">城市网络</div>
+                </div>
+                <div class="case-content">
+                    <h3>光子纠缠分发网络</h3>
+                    <p>实现城市级量子通信覆盖，密钥传输速率达12Gbps。</p>
+                    <div class="case-footer">
+                        <span class="lab-tag">SpaceX实验室</span>
+                        <button class="detail-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                            </svg>
+                            详情
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 动态加载图片
+        document.addEventListener('DOMContentLoaded', () => {
+            const images = document.querySelectorAll('.case-image img');
+            images.forEach(img => {
+                const src = img.getAttribute('src');
+                img.setAttribute('src', '');
+                setTimeout(() => img.setAttribute('src', src), 500);
+            });
+        });
+
+        // 卡片悬停效果
+        document.querySelectorAll('.case-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                card.style.setProperty('--x', `${x / rect.width * 100}%`);
+                card.style.setProperty('--y', `${y / rect.height * 100}%`);
+            });
+        });
+
+        // 滚动动画
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        });
+
+        document.querySelectorAll('.case-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

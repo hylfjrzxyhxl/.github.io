@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI加速，青春领跑</title>
+    <style>
+        /* 粒子背景样式 */
+        .canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(45deg, rgba(11, 3, 45, 0.9), rgba(42, 15, 88, 0.7)); /* 蓝紫渐变蒙版 */
+            z-index: 1;
+        }
+
+        /* 首页内容 */
+        .hero-section {
+            position: relative;
+            z-index: 2;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: rgb(252, 247, 247);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .main-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 15px rgba(59, 169, 248, 0.5);
+        }
+
+        /* 修复后的副标题轮播样式 */
+            .subtitle-carousel {
+                font-size: clamp(1.2rem, 3vw, 1.8rem);
+                height: 2em;
+                overflow: hidden;
+                position: relative;
+                width: 40%;
+                color: white; /* 确保文字颜色可见 */
+            }
+
+            .subtitle {
+                animation: carousel 12s infinite;
+                opacity: 0;
+                position: absolute;
+                width: 100%;
+                left: 0;
+                /* 新增关键样式 */
+                white-space: nowrap; /* 防止文字换行 */
+                transform: translateX(100%); /* 初始位置在右侧 */
+            }
+
+            @keyframes carousel {
+                0% {
+                    opacity: 0;
+                    transform: translateX(100%);
+                }
+                10% {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+                30% {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+                40% {
+                    opacity: 0;
+                    transform: translateX(-100%);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateX(-100%);
+                }
+            }
+
+            /* 设置各字幕延迟 */
+            .subtitle:nth-child(1) { animation-delay: 0s; }
+            .subtitle:nth-child(2) { animation-delay: 4s; }
+            .subtitle:nth-child(3) { animation-delay: 8s; }
+ 
+        /* 导航箭头 */
+        .scroll-hint 
+        {
+        position: absolute;
+        bottom: 30px;
+        left: 51%;
+        transform: translateX(-50%);
+        animation: float 2s ease-in-out infinite;
+        cursor: pointer;
+        }
+
+        @keyframes float 
+        {
+        0%, 100% { transform: translate(-50%, 0); }
+        50% { transform: translate(-50%, 15px); }
+        }
+
+        /* 导航模块CSS */
+        .timeline-nav {
+            position: relative;
+            margin: 80px 0 120px;
+            padding: 40px 0;
+            overflow: hidden;
+        }
+
+        .nav-orbits {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .orbit {
+            position: absolute;
+            border: 1px solid rgba(109, 12, 244, 0.2);
+            border-radius: 50%;
+            animation: orbitRotate 60s linear infinite;
+        }
+
+        .orbit:nth-child(1) {
+            width: 300%;
+            height: 300%;
+            left: -100%;
+            top: -100%;
+            animation-duration: 80s;
+        }
+
+        .orbit:nth-child(2) {
+            width: 200%;
+            height: 200%;
+            left: -50%;
+            top: -50%;
+            animation-direction: reverse;
+        }
+
+        .timeline-nav-items {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            background: rgba(42, 3, 104, 0.8);
+            border: 2px solid rgba(87, 184, 255, 0.3);
+            padding: 18px 40px;
+            border-radius: 50px;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(7, 133, 236, 0.2),
+                transparent);
+            transition: 0.5s;
+        }
+
+        .nav-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 30px rgba(87, 184, 255, 0.3);
+            border-color: #57b8ff;
+        }
+
+        .nav-item:hover::before {
+            left: 100%;
+        }
+
+        .nav-item.active {
+            background: rgba(87, 184, 255, 0.15);
+            border-color: #57b8ff;
+            box-shadow: 0 0 40px rgba(87, 184, 255, 0.3);
+        }
+
+        @keyframes orbitRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .timeline-nav {
+                margin: 50px 0;
+            }
+            
+            .nav-item {
+                padding: 12px 25px;
+                font-size: 14px;
+            }
+        }
+            /* 内容页面样式 */
+            .content-section 
+            {
+            position: relative;
+            z-index: 3;
+            background: rgba(255, 255, 255, 0.95);
+            min-height: 100vh;
+            padding-top: 80px;
+            transform: translateY(100vh);
+            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            /* 时间轴和卡片样式 */
+            .container 
+            {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            }
+
+            .timeline 
+            {
+            position: relative;
+            padding: 40px 0;
+            }
+
+            .timeline::after 
+            {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: #2A5CAA;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            }
+
+            .timeline-item 
+            {
+            position: relative;
+            width: 50%;
+            padding: -5px;
+            transition: all 0.3s;
+            }
+
+            .timeline-item:nth-child(odd) 
+            {
+            left: 0;
+            text-align: right;
+            }
+
+            .timeline-item:nth-child(even) 
+            {
+            left: 50%;
+            }
+
+            .timeline-content 
+            {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            position: relative;
+            cursor: pointer;
+            }
+
+            .timeline-content::after 
+            {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #FF6B35;
+            border-radius: 50%;
+            top: 24px;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content::after 
+            {
+            right: -10px;
+            }
+
+            .timeline-item:nth-child(even) .timeline-content::after 
+            {
+            left: -20px;
+            }
+
+            .details 
+            {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            }
+
+            .card-container 
+            {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 40px 0;
+            }
+
+            .card 
+            {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            }
+
+            .card:hover 
+            {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            }
+
+            .card-image 
+            {
+            height: 250px;
+            background-size: cover;
+            position: relative;
+            }
+
+            .card-quote 
+            {
+            position: absolute;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            width: 100%;
+            padding: 15px;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+            }
+
+            .card:hover .card-quote 
+            {
+            transform: translateY(0);
+            }
+
+            .card-content 
+            {
+            padding: 20px;
+            }
+
+            @media (max-width: 768px) 
+            {
+            .timeline::after 
+            {
+            left: 20px;
+            }
+
+            .timeline-item 
+            {
+            width: 100%;
+            left: 0 !important;
+            padding-left: 50px;
+            padding-right: 0;
+            text-align: left !important;
+            }
+
+            .timeline-content::after 
+            {
+            left: -24px !important;
+            right: auto !important;
+            }
+            }
+            </style>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div class="canvas-container">
+        <canvas id="particleCanvas"></canvas>
+    </div>
+
+    <!-- 首页 -->
+    <section class="hero-section">
+        <h1 class="main-title">AI赋能，青春领跑</h1>
+        <div class="subtitle-carousel">
+            <div class="subtitle">AI时代，青年人如何实现价值？</div>
+            <div class="subtitle">让AI成为你的第二大脑，而非替代品</div>
+            <div class="subtitle">数字素养提升,正确使用AI</div>
+        </div>
+        <svg class="scroll-hint" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" onclick="smoothScroll()">
+            <path d="M12 5v14M19 12l-7 7-7-7"/>
+        </svg>
+    </section>
+    <!--菜单-->
+        <section class="timeline-nav">
+            <div class="nav-orbits">
+                <div class="orbit"></div>
+                <div class="orbit"></div>
+            </div>
+            <div class="timeline-nav-items">
+                <a href="青年人的奋进.html" >
+                    <button class="nav-item active" data-year="2022">AI时代青年奋进</button>
+                </a>
+                <a href="index1.html" >
+                    <button class="nav-item" data-year="2023">AI加速，青春领跑</button>
+                </a>
+                <a href="未来.html" >
+                <button class="nav-item" data-year="2024">未来蓝图，青年绘就</button>
+                </a>
+            </div>
+        </section>
+
+    <!-- 内容页面 -->
+    <section class="content-section" id="mainContent">
+        <div class="container">
+            <!-- 时间轴 -->
+            <section class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content" onclick="toggleDetail(this)">
+                        <h3>思想萌芽期（1943-1955）</h3>
+                        <p>
+                            1943 麦卡洛克-皮茨神经元模型提出，奠定神经网络数学基础                                               
+                        </p>
+                        <div class="details">
+                            <p>▶️  1950 图灵发表《计算机器与智能》，提出「模仿游戏」测试理论 </p>
+                            <p>🚀    1951 首台神经计算机SNARC诞生，用3000真空管模拟40神经元</p>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="timeline-item">
+                    <div class="timeline-content" onclick="toggleDetail(this)">
+                        <h3>黄金黎明（1956-1973）</h3>
+                        <p>1956 达特茅斯会议确立「Artificial Intelligence」术语，纽厄尔推出逻辑理论家程序</p>
+                        <div class="details">
+                         <p>▶️ 1959 塞弗里奇开发模式识别系统，开创机器视觉先河
+
+                            1965 费根鲍姆研制DENDRAL专家系统，实现首例AI化学分析
+                        </p>
+                         <p>🚀 1972 维诺格拉德SHRDLU系统突破自然语言理解瓶颈</p>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- 案例3 -->
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="toggleDetail(this)">
+                    <h3>寒冬蛰伏（1974-1992）</h3>
+                    <p>1980 日本启动第五代计算机计划，推动并行推理架构发展
+
+                       </p>
+                    <div class="details">
+                        <p>▶️  1982 霍普菲尔德神经网络提出，突破联想记忆技术
+                                1986 辛顿团队发表反向传播算法，开启神经网络新时代</p>
+                        <p>🚀 1992 TD-Gammon程序在西洋双陆棋击败世界冠军</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 案例4 -->
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="toggleDetail(this)">
+                    <h3>算力觉醒（1993-2011）</h3>
+                    <p>1997 深蓝战胜卡斯帕罗夫，树搜索算法震惊世界</p>
+                    <div class="card-content">
+                        <div class="details">
+                            <p>▶️ 2006 辛顿提出深度学习概念，突破梯度消失难题
+                                2009 ImageNet数据集发布，奠定计算机视觉基准
+                            </p>
+                            <p>🚀 2011 IBM Watson在《危险边缘》击败人类冠军</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--5-->>
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="toggleDetail(this)">
+                    <h3>深度学习革命（2012-2020）</h3>
+                    <p>2012 AlexNet在ImageNet识别错误率骤降至15.3%（传统方法26.2%）</p>
+                    <div class="card-content">
+                        <div class="details">
+                            <p>▶️ 22014 GAN生成对抗网络问世，突破无监督学习范式
+
+                                2015 ResNet使神经网络深度突破千层，ImageNet错误率降至3.57%
+                                
+                                2016 AlphaGo击败李世石，蒙特卡洛树搜索+策略价值网络颠覆棋类AI
+                            </p>
+                            <p>🚀 2018 BERT模型开启预训练语言模型时代，GLUE基准得分首超人类</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="toggleDetail(this)">
+                    <h3>大模型纪元（2021-至今）</h3>
+                    <p>2020 GPT-3展现1750亿参数模型的涌现能力</p>
+                    <div class="card-content">
+                        <div class="details">
+                            <p>▶️ 2021 AlphaFold2破解蛋白质折叠难题，准确度达原子级别
+
+                                2022 DALL·E 2实现文生图突破，CLIP跨模态理解框架成熟
+                            </p>
+                            <p>🚀 2023 GPT-4通过图灵测试，多模态理解能力覆盖文本/图像/代码</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="toggleDetail(this)">
+                    <h3>中国突破时刻</h3>
+                 
+                    <div class="card-content">
+                        <div class="details">
+                            <p>
+                                2017 商汤科技发布SenseAR增强现实引擎
+
+                                2019 旷视Brain++平台实现算法-算力-数据协同进化
+                                
+                                2021 百度ERNIE 3.0登顶SuperGLUE榜首
+                                
+                            
+ 
+                            </p>
+                            <p>🚀 
+                                2022 阿里巴巴「通义」大模型实现10万亿参数训练
+                                2023 智源研究院「悟道3.0」突破认知智能关键技术
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 卡片布局 -->
+        <div class="card-container">
+            <div class="card">
+                <a href="青年人的奋进.html">
+                <div class="card-image"  style="background-image: url('./picture/avatar1.jpg') ">  
+                        <div class="card-quote">"AI不是替代，而是新的起跑线"</div>    
+                </a>                             
+                </div>
+                <div class="card-content">
+                    <h3>AI时代青年人更需奋进前行</h3>
+                    <p>
+                        当算法开始理解语言时，青年必须掌握用想象力重构问题的能力——因为AI擅长优化已知，
+                        而人类专属价值在于定义未知。任正非说：“在算力军备竞赛中，青年要锻造原始创新的'根技术'思维，
+                        在基础理论的无人区播撒变革的种子。”
+
+                    </p>
+                </div>
+            </div>
+           
+        <div class="card" onclick="window.location='#template2'">
+                <div class="card-image" style="background-image: url('./picture/tech2.jpg')">
+                    <a href="page_moment.html">
+                        <div class="card-quote">"代码是我们的画笔，数据是新的画布"</div>
+                    </a>
+                   
+                </div>
+                <div class="card-content">
+                    <h3>A时代青年人的机遇</h3>
+                    <p>
+                        青年人直面技术革命浪潮，掌握智能工具，
+                        以数据思维开拓新业态，借全球化数字协作突破地域限制，
+                        以前沿技术应用催生跨界创新，创造社会价值，正迎来定义未来规则的历史性机遇。
+
+                    </p>
+                </div>
+            </div>
+
+            <!-- 案例3 -->
+            <div class="card" onclick="window.location='#template3'">
+                <div class="card-image" style="background-image: url('./picture/tech3.jpg')">
+                    <a href="3.html">
+                        <div class="card-quote">AI比核武器更危险，监管缺失可能打开潘多拉魔盒。</div>
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h3>AI时代所要面临的挑战</h3>
+                    <p>人工智能会让人类陷入前所未有的巨大陷阱。
+                        如果人类过于依赖人工智能，可能会丧失开拓精神和文明活力，
+                        最终可能被人工智能消灭。"最危险的AI不是有意识的机器，而是人类放弃思考的惰性。"
+                        "技术越强大，越需要人文精神的制衡，否则我们将失去人性的坐标。"
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <script>
+
+
+        // 粒子背景初始化
+        class ParticleBackground {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.particles = [];
+                this.resize();
+                this.init();
+                window.addEventListener('resize', () => this.resize());
+            }
+
+            resize() {
+                this.width = this.canvas.width = window.innerWidth;
+                this.height = this.canvas.height = window.innerHeight;
+            }
+
+            init() {
+                const particleCount = Math.floor(this.width * 0.15);
+                for(let i = 0; i < particleCount; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.width,
+                        y: Math.random() * this.height,
+                        size: Math.random() * 2 + 1,
+                        speedX: (Math.random() - 0.5) * 0.5,
+                        speedY: (Math.random() - 0.5) * 0.5,
+                        color: `rgba(87, 184, 255, ${Math.random() * 0.4 + 0.2})`
+                    });
+                }
+                this.animate();
+            }
+
+            animate() {
+                this.ctx.clearRect(0, 0, this.width, this.height);
+                
+                this.particles.forEach(particle => {
+                    particle.x += particle.speedX;
+                    particle.y += particle.speedY;
+
+                    if(particle.x < 0 || particle.x > this.width) particle.speedX *= -1;
+                    if(particle.y < 0 || particle.y > this.height) particle.speedY *= -1;
+
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                    this.ctx.fillStyle = particle.color;
+                    this.ctx.fill();
+                });
+
+                this.particles.forEach((a, i) => {
+                    this.particles.slice(i).forEach(b => {
+                        const dx = a.x - b.x;
+                        const dy = a.y - b.y;
+                        const dist = Math.sqrt(dx*dx + dy*dy);
+                        
+                        if(dist < 100) {
+                            this.ctx.beginPath();
+                            this.ctx.strokeStyle = `rgba(255,255,255,${1 - dist/100})`;
+                            this.ctx.lineWidth = 0.5;
+                            this.ctx.moveTo(a.x, a.y);
+                            this.ctx.lineTo(b.x, b.y);
+                            this.ctx.stroke();
+                        }
+                    });
+                });
+
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        // 初始化粒子效果
+        const canvas = document.getElementById('particleCanvas');
+        new ParticleBackground(canvas);
+
+        // 平滑滚动
+        function smoothScroll() {
+            const contentSection = document.getElementById('mainContent');
+            contentSection.style.transform = 'translateY(0)';
+            contentSection.style.boxShadow = '0 -10px 30px rgba(0,0,0,0.2)';
+            contentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // 导航交互JS
+        document.addEventListener('DOMContentLoaded', () => {
+            // 导航联动
+            const navItems = document.querySelectorAll('.nav-item');
+            const timelineItems = document.querySelectorAll('.timeline-item');
+
+            // 更新激活状态
+            function updateActiveNav(targetYear) {
+                navItems.forEach(item => {
+                    item.classList.toggle('active', item.dataset.year === targetYear);
+                });
+            }
+
+            // 点击导航
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const targetYear = this.dataset.year;
+                    const targetItem = [...timelineItems].find(
+                        item => item.querySelector('h3').textContent.includes(targetYear)
+                    );
+                    
+                    if (targetItem) {
+                        window.scrollTo({
+                            top: targetItem.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                        updateActiveNav(targetYear);
+                    }
+                });
+            });
+
+            // 滚动监听
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const year = entry.target.querySelector('h3').textContent.match(/\d{4}/)[0];
+                        updateActiveNav(year);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            timelineItems.forEach(item => observer.observe(item));
+        });
+        // 时间轴交互
+        function toggleDetail(element) {
+            const details = element.querySelector('.details');
+            details.style.maxHeight = details.style.maxHeight ? null : `${details.scrollHeight}px`;
+        }
+
+        // 卡片点击事件
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', function() {
+                window.location.href = this.getAttribute('data-link');
+            });
+        });
+
+        // 窗口调整重置
+        window.addEventListener('resize', () => {
+            document.querySelectorAll('.details').forEach(d => d.style.maxHeight = null);
+        });
+    </script>
+</body>
+</html>

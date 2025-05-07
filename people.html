@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>动态人物介绍</title>
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a1a, #2d3436);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* 卡片容器 */
+        .card {
+            position: relative;
+            width: 800px;
+            height: 450px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+            overflow: hidden;
+        }
+
+        /* 悬停效果 */
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 左侧区域 */
+        .left {
+            position: absolute;
+            width: 40%;
+            height: 100%;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* 动态头像 */
+        .avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 20px;
+            overflow: hidden;
+            animation: float 3s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        .avatar:hover {
+            transform: scale(1.05);
+            border-color: #00fff2;
+            animation-play-state: paused;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 右侧内容 */
+        .right {
+            position: absolute;
+            left: 40%;
+            width: 60%;
+            height: 100%;
+            padding: 40px;
+            color: white;
+        }
+
+        /* 标题动画 */
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: #00fff2;
+            transition: width 0.5s ease;
+        }
+
+        h1:hover::after {
+            width: 100%;
+        }
+
+        /* 信息列表动画 */
+        .info-list {
+            list-style: none;
+        }
+
+        .info-item {
+            margin: 15px 0;
+            opacity: 0;
+            transform: translateX(50px);
+            animation: slideIn 0.8s forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .info-item:nth-child(1) { animation-delay: 0.2s; }
+        .info-item:nth-child(2) { animation-delay: 0.4s; }
+        .info-item:nth-child(3) { animation-delay: 0.6s; }
+        .info-item:nth-child(4) { animation-delay: 0.8s; }
+
+        /* 技能条动画 */
+        .skill-bar {
+            background: rgba(255, 255, 255, 0.1);
+            height: 8px;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00fff2, #0066ff);
+            width: 0;
+            transition: width 1s ease;
+        }
+
+        /* 关键帧动画 */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes cardEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* 初始化动画 */
+        .card {
+            animation: cardEntrance 1s ease-out;
+        }
+
+      
+
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="left">
+            <div class="avatar">
+                <img src="avatar.jpg" alt="人物头像">
+            </div>         
+        </div>
+        <div class="right">
+            <h1>古籍修复师</h1>
+            <ul class="info-list">
+                <li class="info-item">
+                    <h3>基本信息</h3>
+                    <p>北大文博团队利用对抗生成网络，修复敦煌残卷文字，还原精度达0.1毫米级</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="card">
+        <div class="left">
+            <div class="avatar">
+                <img src="avatar.jpg" alt="人物头像">
+            </div>         
+        </div>
+        <div class="right">
+            <h1>青光眼哨兵</h1>
+            <ul class="info-list">
+                <li class="info-item">
+                    <h3>基本信息</h3>
+                    <p>
+                        清华学生团队开发AI眼科筛查系统，通过手机摄像头分析眼底照片，
+                        3秒预警青光眼风险，准确率98.7%
+
+                    </p>
+                </li>
+            </ul>
+        </div>
+
+        <div class="left">
+            <div class="avatar">
+                <img src="avatar.jpg" alt="人物头像">
+            </div>         
+        </div>
+        <div class="right">
+            <h1>神农气象员</h1>
+            <ul class="info-list">
+                <li class="info-item">
+                    <h3>基本信息</h3>
+                    <p>浙大农学博士用深度学习预测农作物病害，提前7天预警稻瘟病，减少农民损失63%</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="card">
+        <div class="left">
+            <div class="avatar">
+                <img src="avatar.jpg" alt="人物头像">
+            </div>         
+        </div>
+        <div class="right">
+            <h1>作业诊断仪</h1>
+            <ul class="info-list">
+                <li class="info-item">
+                    <h3>基本信息</h3>
+                    <p>中科大少年班AI系统扫描作业本，5秒定位知识盲点，个性化生成练习题</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="left">
+            <div class="avatar">
+                <img src="avatar.jpg" alt="人物头像">
+            </div>         
+        </div>
+        <div class="right">
+            <h1>孤独预警环</h1>
+            <ul class="info-list">
+                <li class="info-item">
+                    <h3>基本信息</h3>
+                    <p>北师大心理学+AI交叉项目，通过可穿戴设备监测社交焦虑指数，提前干预抑郁风险</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="left">
+            <div class="avatar">
+                <img src="avatar.jpg" alt="人物头像">
+            </div>         
+        </div>
+        <div class="right">
+            <h1>工业听诊器</h1>
+            <ul class="info-list">
+                <li class="info-item">
+                    <h3>基本信息</h3>
+                    <p>哈工大团队研发声纹分析AI，通过设备异响预测机械故障，准确率超92%</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+   
+    <script>
+        // 添加卡片点击效果
+        const card = document.querySelector('.card');
+        card.addEventListener('click', () => {
+            card.style.transform = `rotateX(${Math.random()*2}deg) rotateY(${Math.random()*2}deg)`;
+        });
+
+        // 动态加载技能条
+        document.querySelectorAll('.skill-progress').forEach(progress => {
+            const targetWidth = progress.style.width;
+            progress.style.width = '0';
+            setTimeout(() => {
+                progress.style.width = targetWidth;
+            }, 500);
+        });
+
+        // 随机颜色变化
+        const colors = ['#00fff2', '#ff7675', '#74b9ff', '#a29bfe'];
+        setInterval(() => {
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            document.documentElement.style.setProperty('--main-color', randomColor);
+        }, 5000);
+
+    </script>
+</body>
+</html>

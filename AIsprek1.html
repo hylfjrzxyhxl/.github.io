@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>本地AI问答系统</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        #chatWindow {
+            height: 60vh;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin: 10px;
+            padding: 12px 20px;
+            border-radius: 20px;
+            max-width: 80%;
+            animation: fadeIn 0.3s;
+        }
+
+        .user-message {
+            background: var(--secondary);
+            color: white;
+            margin-left: auto;
+        }
+
+        .bot-message {
+            background: #e9ecef;
+            margin-right: auto;
+        }
+
+        #inputArea {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+
+        #userInput {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px 25px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .status {
+            text-align: center;
+            padding: 10px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="chatWindow"></div>
+        <div class="status" id="status">模型加载中...</div>
+        <div id="inputArea">
+            <input type="text" id="userInput" placeholder="输入您的问题">
+            <button onclick="processQuestion()">提问</button>
+        </div>
+    </div>
+
+    <!-- 引入TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0/dist/tf.min.js"></script>
+    <!-- 引入预训练QA模型 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/qna@1.0.0"></script>
+
+    <script>
+        let model;
+        const passage = `通用知识库：
+            1. 中国首都是北京
+            2. 水的化学式是H₂O
+            3. 太阳系有8大行星
+            4. Python是一种编程语言
+            5. 爱因斯坦提出相对论
+            6. 新冠病毒主要通过飞沫传播
+            7. 故宫位于北京市中心
+            8. HTML是网页开发基础语言
+            9. 光速约为299,792,458米/秒
+            10. 亚马逊河是世界第二长河`;
+
+        // 初始化模型
+        async function loadModel() {
+            try {
+                model = await qna.load();
+                document.getElementById('status').textContent = "模型已就绪";
+            } catch (error) {
+                document.getElementById('status').textContent = "模型加载失败";
+                console.error(error);
+            }
+        }
+
+        // 显示消息
+        function showMessage(text, isUser) {
+            const chatWindow = document.getElementById('chatWindow');
+            const div = document.createElement('div');
+            div.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            div.textContent = text;
+            chatWindow.appendChild(div);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        // 处理问题
+        async function processQuestion() {
+            const question = document.getElementById('userInput').value.trim();
+            if (!question) return;
+            
+            showMessage(question, true);
+            document.getElementById('userInput').value = '';
+            document.getElementById('status').textContent = "正在思考...";
+
+            try {
+                const answers = await model.findAnswers(question, passage);
+                
+                if (answers.length > 0) {
+                    const bestAnswer = answers[0].text;
+                    showMessage(bestAnswer, false);
+                } else {
+                    showMessage("暂时无法回答这个问题", false);
+                }
+            } catch (error) {
+                showMessage("处理问题时发生错误", false);
+                console.error(error);
+            }
+            
+            document.getElementById('status').textContent = "模型已就绪";
+        }
+
+        // 初始化
+        loadModel();
+        
+        // 回车键支持
+        document.getElementById('userInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') processQuestion();
+        });
+    </script>
+</body>
+</html>

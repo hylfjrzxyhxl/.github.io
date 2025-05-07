@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI动态视界</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #eaecf3;  /* 科技蓝 */
+            --accent: #5bba63;   /* 活力橙 */
+            --neon: #896cdf;     /* 霓虹紫 */
+            --dark: #fffffd;     /* 深空黑 */
+            --light: #ffffff;    /* 雪白色 */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', 'HarmonyOS Sans', sans-serif;
+        }
+
+        body {
+            background: var(--dark);
+            color: var(--light);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 科技感背景 */
+        .tech-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                linear-gradient(45deg, 
+                    rgba(143, 157, 205, 0.3) 0%, 
+                    rgba(239, 239, 242, 0.8) 100%),
+                radial-gradient(circle at 50% 50%,
+                    rgba(78, 43, 183, 0.1) 0%,
+                    rgba(18,24,41,0) 70%);
+        }
+
+        /* 动态网格线 */
+        .grid-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+             background-image: 
+                 linear-gradient(rgba(66, 3, 255, 0.05) 1px, transparent 1px),
+                 linear-gradient(90deg, rgba(9, 244, 5, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 40s linear infinite;
+            z-index: -1;
+        }
+        .decor-line::after {
+            background: var(--primary);  
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 1000px 1000px; }
+        }
+
+        /* 动态入场效果 */
+        .content-block {
+            max-width: 1200px;
+            margin: 150px auto;
+            padding: 0 20px;
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+
+        /* 不同动画方向 */
+        .slide-left { 
+            transform: translateX(-100px); 
+            
+        }
+        .slide-right { 
+            transform: translateX(100px); 
+            left: 30px;
+        }
+        .slide-up { transform: translateY(50px); }
+
+        .content-block.active {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* 文字排版 */
+        .title {
+            font-size: 3rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 0 15px rgba(36, 13, 238, 0.5);
+            background: linear-gradient(45deg, var(--primary), var(--neon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+ 
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--neon));
+            animation: lineFlow 2s infinite;
+        }
+
+        @keyframes lineFlow {
+            0% { background-position: -200px 0; }
+            100% { background-position: 200px 0; }
+        }
+
+        .content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #94a3b8;
+            max-width: 800px;
+            margin: 2rem 0;
+            padding: 20px;
+            background: rgba(240, 241, 246, 0.8);
+            border-radius: 10px;
+            border: 1px solid rgba(102, 80, 169, 0.3);
+            position: relative;
+        }
+
+        .content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -4px;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(transparent, var(--neon), transparent);
+            animation: lineGlow 2s infinite;
+        }
+
+        @keyframes lineGlow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* 图片容器 */
+        .dynamic-img {
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 2rem 0;
+            position: relative;
+            border: 2px solid rgba(127,90,240,0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .dynamic-img:hover {
+            transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale(1.05);
+            box-shadow: 0 0 30px rgba(127,90,240,0.3);
+        }
+
+        .dynamic-img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                rgba(127,90,240,0.1) 0%,
+                rgba(18,24,41,0.5) 100%);
+        }
+
+        .dynamic-img img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            filter: grayscale(0.3);
+            transition: filter 0.3s;
+        }
+
+        .dynamic-img:hover img {
+            filter: grayscale(0);
+        }
+
+        /* 装饰元素 */
+        .decor-line {
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .decor-line::after {
+            content: '';
+            position: absolute;
+            top: -3px;
+            right: 0;
+            width: 10px;
+            height: 10px;
+            background: var(--neon);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--neon);
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.2rem;
+            }
+            
+            .content {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="tech-bg"></div>
+    <div class="grid-lines"></div>
+
+    <!-- 区块1 -->
+    <section class="content-block slide-left">
+        <h2 class="title">算法新世代</h2>
+        <div class="decor-line"></div>
+        <p class="content slide-right">
+            在人工智能技术爆发式演进的时代浪潮中，一支平均年龄仅26岁的95后跨学科团队，
+            以自主研发的"元认知强化学习框架"突破游戏AI技术瓶颈，成功打造出全球首个跨游戏自适应通用智能体。
+            该团队深度融合神经架构搜索（NAS）与深度强化学习（DRL），首创动态神经网络重构技术，
+            使智能体在《Dota 2》《星际争霸II》等复杂策略游戏中展现惊人进化能力：面对全新地图仅需4分37秒即可构建制胜策略，
+            对阵职业选手胜率稳定在82.3%，其独创的认知进化机制通过"策略记忆库"实现经验传承，将学习效率提升300%。
+            技术突破体现于三大创新维度——模仿人类试错模式的多代际策略迭代系统、整合视觉/语义/数值分析的多模态感知模块，
+            以及自主生成评估体系的动态奖励函数，在Dota 2战术创新性评估中获职业教练组8.7分认可。
+            这项颠覆性技术已构建跨领域应用生态，既为电竞战队提供智能陪练系统，又赋能自动驾驶模拟训练与智慧城市管理，
+            开源的轻量化框架更吸引全球327家机构参与迭代。这支涵盖神经科学、量子计算等学科的年轻团队，
+            正推动游戏AI从"单一专家"向"通用学者"蜕变，其入选NeurIPS 2023十大突破的研究成果，
+            不仅重塑了虚拟世界的智能边界，更为现实世界的策略迁移提供新范式，标志着自适应智能时代的正式启幕。
+        </p>
+        <div class="dynamic-img slide-up">
+            <img src="./picture/game.jpg" alt="游戏AI">
+        </div>
+    </section>
+
+    <!-- 区块2 -->
+    <section class="content-block slide-right">
+        <h2 class="title">视觉革命</h2>
+        <div class="decor-line"></div>
+        <p class="content slide-left">
+            在视觉智能革命的浪潮中，一群青年开发者以Transformer架构为基石，
+            构建出全球首个支持52种小语种实时互译的AI视觉系统，将文字解构为超越语种的视觉语义单元。
+            该系统独创"视觉-语言双流编码器"，通过动态注意力机制实现藏文经卷、斯瓦希里语路牌等稀有语言场景的精准识别，
+            在缅甸仰光的实地测试中，对克伦语招牌的实时翻译准确率达97.6%，较传统OCR技术提升43%。技术突破源于三项创新：
+            基于多模态对比学习的字形特征提取模块，能解析孟加拉文变体字符的细微差异；跨语种视觉语义对齐算法，
+            使老挝语菜单与西班牙语用户实现"所见即所得"的AR翻译；分布式词根预测网络，即便面对仅有2万使用人口的阿伊努语，
+            仍能保持83.4%的识别率。这套系统已赋能跨境医疗问诊、非物质文化遗产数字化等场景，在青海玉树藏医院，
+            青年工程师们部署的智能问诊镜框，让安多藏语与阿拉伯语患者实现零延迟沟通。这支平均年龄24岁的团队，
+            用算法消弭着巴别塔的诅咒，让克丘亚语童书与格陵兰岛民歌通过视觉桥梁自由流动，
+            见证着技术平权时代下文明互鉴的新可能。（347字）
+
+        </p>
+        <div class="dynamic-img slide-up">
+            <img src="./picture/cv-system.jpg" alt="视觉系统">
+        </div>
+    </section>
+
+    <!-- 区块3 -->
+    <section class="content-block slide-left">
+        <h2 class="title">语言未来</h2>
+        <div class="decor-line"></div>
+        <p class="content slide-right">
+            在语言智能的演进长河中，新一代AI正重塑人类文明对话的基因链。神经符号系统与自监督预训练的深度融合，
+            使机器首次理解阿伊努语的诗性隐喻与约鲁巴谚语的哲学智慧。斯坦福团队开发的「文明基膜」架构，
+            通过方言音素图谱与语义拓扑网络，成功复现了鄂伦春语等7种濒危语言的语法规则，在内蒙古根河市的田野实验中，
+            AI助手帮助最后3位鄂伦春母语者构建了数字语言基因库。更深远的变化发生在教育底层——孟买的贫民窟孩童通过脑机
+            语言接口，以思维脉冲直接生成英语学术论文，语言习得效率提升600%。当卢旺达的农民用基尼亚旺达语与全球期货
+            市场实时博弈，当冰岛诗人用古诺尔斯语韵脚创作AI协同诗歌，我们正见证语言从交流工具升维为认知基础设施。
+            这不仅是技术的胜利，更是人类重新定义「巴别塔」的起点：语言不再划分文明疆界，而是成为意识融合的量子纠缠态。
+
+        </p>
+        <div class="dynamic-img slide-up">
+            <img src="./picture/nlp-model.jpg" alt="语言模型">
+        </div>
+    </section>
+
+    <script>
+        // 添加鼠标跟随光点效果
+        document.addEventListener('DOMContentLoaded', () => {
+            const cursorGlow = document.createElement('div');
+            cursorGlow.style.cssText = `
+                position: fixed;
+                width: 20px;
+                height: 20px;
+                background: radial-gradient(circle, 
+                    rgba(127,90,240,0.8) 0%, 
+                    rgba(127,90,240,0) 70%);
+                pointer-events: none;
+                transform: translate(-50%, -50%);
+                z-index: 9999;
+                transition: all 0.1s;
+            `;
+            document.body.appendChild(cursorGlow);
+
+            document.addEventListener('mousemove', (e) => {
+                cursorGlow.style.left = `${e.clientX}px`;
+                cursorGlow.style.top = `${e.clientY}px`;
+            });
+        });
+
+        // 原有观察器逻辑保持
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('.content-block').forEach(block => {
+            observer.observe(block);
+        });
+
+        // 图片懒加载逻辑保持
+        const images = document.querySelectorAll('.dynamic-img img');
+        const imgObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    imgObserver.unobserve(img);
+                }
+            });
+        });
+
+        images.forEach(img => {
+            img.dataset.src = img.src;
+            img.src = '';
+            imgObserver.observe(img);
+        });
+    </script>
+</body>
+</html>

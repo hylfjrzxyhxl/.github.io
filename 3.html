@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI时代青年十大挑战</title>
+    <style>
+        :root {
+            --neon-blue: #00f3ff;
+            --cyber-purple: #6c00ff;
+            --hologram-gradient: linear-gradient(135deg, #00f3ff33, #6c00ff33);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ffffff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .header {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #00f3ff, #6c00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cyber-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .cyber-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            perspective: 2000px;
+        }
+
+        .challenge-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transform-style: preserve-3d;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .challenge-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            border-image: linear-gradient(45deg, var(--neon-blue), var(--cyber-purple));
+            border-image-slice: 1;
+        }
+
+        .card-glow {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, 
+                rgba(0, 243, 255, 0.1) 0%, 
+                rgba(108, 0, 255, 0.05) 50%,
+                transparent 100%);
+            animation: glowMove 8s infinite linear;
+            mix-blend-mode: screen;
+        }
+
+        @keyframes glowMove {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .challenge-number {
+            font-size: 24px;
+            color: var(--cyber-purple);
+            margin-bottom: 15px;
+        }
+
+        .challenge-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--cyber-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .challenge-desc {
+            color: #666;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .cyber-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>AI时代青年十大挑战</h1>
+        <p>技术浪潮中的认知突围战</p>
+    </header>
+
+    <div class="cyber-container">
+        <div class="cyber-grid">
+            <!-- 挑战1 -->
+            <div class="challenge-card">
+                <div class="card-glow"></div>
+                <div class="challenge-number">01</div>
+                <h2 class="challenge-title">创新能力缺失</h2>
+                <p class="challenge-desc">过度依赖AI生成解决方案，导致原创性思维退化，2019-2023年青年专利申报量下降37%</p>
+            </div>
+
+            <!-- 挑战2 -->
+            <div class="challenge-card">
+                <div class="card-glow"></div>
+                <div class="challenge-number">02</div>
+                <h2 class="challenge-title">想象力萎缩</h2>
+                <p class="challenge-desc">算法推荐导致信息茧房，青年群体跨领域联想能力较2015年下降42%</p>
+            </div>
+
+            <!-- 挑战3 -->
+            <div class="challenge-card">
+                <div class="card-glow"></div>
+                <div class="challenge-number">03</div>
+                <h2 class="challenge-title">认知惰性养成</h2>
+                <p class="challenge-desc">即时答案获取模式使深度思考时间减少，大学生平均专注时长从12分钟降至4分钟</p>
+            </div>
+
+            <!-- 挑战4 -->
+            <div class="challenge-card">
+                <div class="card-glow"></div>
+                <div class="challenge-number">04</div>
+                <h2 class="challenge-title">情感钝化危机</h2>
+                <p class="challenge-desc">人机交互替代真实社交，Z世代共情能力测试得分下降28个百分点</p>
+            </div>
+
+            <!-- 挑战5 -->
+            <div class="challenge-card">
+                <div class="card-glow"></div>
+                <div class="challenge-number">05</div>
+                <h2 class="challenge-title">元认知能力弱化</h2>
+                <p class="challenge-desc">智能工具接管认知监控，青年自我评估误差率上升至63%</p>
+            </div>
+
+            <!-- 挑战6 -->
+            <div class="challenge-card">
+                <div class="card-glow"></div>
+                <div class="challenge-number">06</div>
+                <h2 class="challenge-title">决策依赖症</h2>
+                <p class="challenge-desc">算法推荐使自主决策机会减少，重要生活决策的AI依赖度达79%</p>
+            </div>
+
+            <!-- 挑战7 -->
+            <div class="challenge-card">
+                <div class="card-glow"></div>
+                <div class="challenge-number">07</div>
+                <h2 class="challenge-title">记忆外包风险</h2>
+                <p class="challenge-desc">云存储替代生物记忆，青年群体情景记忆准确率下降54%</p>
+            </div>
+
+            <!-- 挑战8 -->
+            <div class="challenge-card">
+                <div class="card-glow"></div>
+                <div class="challenge-number">08</div>
+                <h2 class="challenge-title">批判思维流失</h2>
+                <p class="challenge-desc">信息过载导致判断力下降，虚假信息辨识准确率仅为38%</p>
+            </div>
+
+            <!-- 挑战9 -->
+            <div class="challenge-card">
+                <div class="card-glow"></div>
+                <div class="challenge-number">09</div>
+                <h2 class="challenge-title">价值取向模糊</h2>
+                <p class="challenge-desc">算法个性化削弱共识基础，青年价值观离散度增加217%</p>
+            </div>
+
+            <!-- 挑战10 -->
+            <div class="challenge-card">
+                <div class="card-glow"></div>
+                <div class="challenge-number">10</div>
+                <h2 class="challenge-title">身体数字化焦虑</h2>
+                <p class="challenge-desc">虚拟身份侵占现实认知，躯体化障碍发病率上升至19%</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 动态光效
+        document.addEventListener('mousemove', (e) => {
+            document.querySelectorAll('.challenge-card').forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // 卡片交互动画
+        document.querySelectorAll('.challenge-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px) rotateX(5deg) scale(1.05)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) rotateX(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

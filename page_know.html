@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用AI，从认识AI开始</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0eb4fb;  /* 科技蓝 */
+            --secondary: #7f5af0; /* 霓虹紫 */
+            --accent: #00ffd5;   /* 青柠光效 */
+            --dark: #102749;     /* 深空蓝 */
+            --light: #ccd6f6;    /* 浅蓝文字 */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        body {
+            background: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+
+        /* 封面样式 */
+        #cover {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 1.5s;
+        }
+
+        /* 动态粒子背景 */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        /* 封面内容 */
+        .cover-content {
+            text-align: center;
+            z-index: 2;
+        }
+
+        .main-title {
+            font-size: 4rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 30px rgba(243, 248, 248, 0.927);
+        }
+
+        /* 内容页面样式 */
+        .content-page {
+            position: relative;
+            z-index: 1;
+            padding-top: 100vh;
+        }
+
+        /* 动态网格线 */
+        .grid-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(39, 33, 101, 0.96) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(9, 9, 9, 0.879) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 40s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 1000px 1000px; }
+        }
+
+        /* 内容区块动画 */
+        .content-block {
+            max-width: 1200px;
+            margin: 150px auto;
+            padding: 0 20px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .content-block.active {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* 文字样式 */
+        .title {
+            font-size: 3rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+            color: azure;
+        }
+
+        .content {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin: 2rem 0;
+            padding: 30px;
+            background: rgb(53, 6, 6);
+            border-radius: 15px;
+            border: 1px solid rgba(21, 161, 236, 0.925);
+            position: relative;
+        }
+
+        /* 动态图片效果 */
+        .dynamic-img {
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 2rem 0;
+            transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
+            transition: transform 0.3s;
+        }
+
+        .dynamic-img:hover {
+            transform: perspective(1000px) rotateX(0) rotateY(0) scale(1.05);
+        }
+
+        .dynamic-img img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <!-- 封面 -->
+    <div id="cover">
+        <canvas id="particle-canvas"></canvas>
+        <div class="cover-content">
+            <h1 class="main-title">从认识AI开始</h1>
+            <p class="enter-prompt">Start understanding AI by using AI</p>
+        </div>
+    </div>
+
+    <!-- 内容页面 -->
+    <div class="content-page">
+        <div class="grid-lines"></div>
+
+        <!-- 内容区块 -->
+        <section class="content-block">
+            <h2 class="title">认识AI</h2>
+            <div class="content">
+                
+                从基础到应用首先，我们需要对AI有一个基本的认识。AI不仅仅是科幻电影中的机器人，
+                它是通过算法和大数据，使计算机能够模拟人类智能的技术。从简单的语音识别到复杂的机器学习，
+                AI的应用已经渗透到我们的日常生活中。了解AI的基本原理和应用场景，是我们在AI时代立足的第一步。
+            </div>
+            <div class="dynamic-img">
+                <img src="./picture/game.jpg" alt="认识AI">
+            </div>
+        </section>
+
+        <section class="content-block">
+            <h2 class="title">终身学习</h2>
+            <div class="content">
+                AI时代的特点之一是快速变化。这意味着我们需要具备终身学习的能力，适应快速变化的时代。学习新技能，
+                比如编程、数据分析或AI相关的知识，将使我们能够适应不断变化的工作环境。
+                此外，持续关注AI领域的最新动态，可以帮助我们把握时代脉搏，不错过任何重要的发展。
+            </div>
+            <div class="dynamic-img">
+                <img src="./picture/lifelong.jpg" alt="终身学习">
+            </div>
+        </section>
+
+        <section class="content-block">
+            <h2 class="title">人机协作</h2>
+            <div class="content">
+                AI不是要取代人类，而是要和人类协作。因此，了解AI的优势和局限性，学会如何与AI合作，
+                变得至关重要。例如，AI擅长处理大量数据和进行复杂计算，而人类在创造性思维和情感交流方面更胜一筹。
+                通过人机协作，我们可以实现效率和创造力的最大化。
+            </div>
+            <div class="dynamic-img">
+                <img src="./picture/Human-machine.jpg" alt="人机协作">
+            </div>
+        </section>
+       <!--
+        <section class="content-blockHuman-machine">
+            <h2 class="title">确保AI的合理使用</h2>
+            <div class="content">
+                随着AI技术的发展，道德和法律问题也日益凸显。我们需要确保AI的应用是公正、透明和符合伦理的。
+                了解相关的法律法规，并在必要时参与公共讨论，是每个公民的责任。
+            </div>
+            <div class="dynamic-img">
+                <img src="./picture/USEAI.jpg" alt="游戏AI">
+            </div>
+        </section>
+         更多内容区块... -->
+    </div>
+
+    <script>
+        // 粒子系统
+        class ParticleSystem {
+            constructor() {
+                this.canvas = document.getElementById('particle-canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.particles = [];
+                this.resize();
+                this.init();
+                window.addEventListener('resize', () => this.resize());
+            }
+
+            resize() {
+                this.width = this.canvas.width = window.innerWidth;
+                this.height = this.canvas.height = window.innerHeight;
+            }
+
+            init() {
+                for(let i = 0; i < 300; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.width,
+                        y: Math.random() * this.height,
+                        size: Math.random() * 2 + 1,
+                        speedX: (Math.random() - 0.5) * 0.5,
+                        speedY: (Math.random() - 0.5) * 0.5,
+                        color: `rgba(0,174,255,${Math.random() * 0.4 + 0.2})`
+                    });
+                }
+                this.animate();
+            }
+
+            animate() {
+                this.ctx.clearRect(0, 0, this.width, this.height);
+                
+                // 粒子连线
+                this.ctx.beginPath();
+                this.particles.forEach((a, i) => {
+                    this.particles.slice(i).forEach(b => {
+                        const dx = a.x - b.x;
+                        const dy = a.y - b.y;
+                        const dist = Math.sqrt(dx*dx + dy*dy);
+                        if(dist < 150) {
+                            this.ctx.strokeStyle = `rgba(0,174,255,${0.3 - dist/500})`;
+                            this.ctx.lineWidth = 0.5;
+                            this.ctx.moveTo(a.x, a.y);
+                            this.ctx.lineTo(b.x, b.y);
+                        }
+                    });
+                });
+                this.ctx.stroke();
+
+                // 更新粒子
+                this.particles.forEach(p => {
+                    p.x += p.speedX;
+                    p.y += p.speedY;
+
+                    if(p.x < 0 || p.x > this.width) p.speedX *= -1;
+                    if(p.y < 0 || p.y > this.height) p.speedY *= -1;
+
+                    this.ctx.beginPath();
+                    this.ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+                    this.ctx.fillStyle = p.color;
+                    this.ctx.fill();
+                });
+
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        // 初始化系统
+        new ParticleSystem();
+
+        // 封面过渡
+        window.addEventListener('scroll', () => {
+            const cover = document.getElementById('cover');
+            cover.style.opacity = 1 - window.scrollY / 300;
+        });
+
+        // 内容动画
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('.content-block').forEach(block => {
+            observer.observe(block);
+        });
+
+        // 图片预加载
+        const images = document.querySelectorAll('.dynamic-img img');
+        images.forEach(img => {
+            const tempImg = new Image();
+            tempImg.src = img.src;
+        });
+    </script>
+</body>
+</html>

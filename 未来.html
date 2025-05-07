@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>青春科技派</title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue: #00aeff;     /* 科技蓝 */
+            --cyan: #00ffd5;     /* 青柠色 */
+            --pink: #ff6bae;     /* 樱花粉 */
+            --light: #f8fbfe;    /* 浅空蓝 */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        body {
+            background: var(--light);
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        /* 背景 */
+        .dynamic-bg {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            background: 
+                linear-gradient(45deg, 
+                    rgba(0,174,255,0.05) 0%, 
+                    rgba(0,255,213,0.03) 100%);
+            z-index: 0;
+        }
+
+   
+        /* 内容容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 标题样式 */
+        .section-title {
+            font-size: 2.8rem;
+            margin: 10px 0;
+            background: linear-gradient(135deg, var(--blue), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 12px rgba(0,174,255,0.1);
+        }
+
+        /* 卡片布局 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,174,255,0.15);
+        }
+
+        /* 图片样式 */
+        .tech-image {
+            width: 100%;
+            height: 250px;
+            border-radius: 15px;
+            object-fit: cover;
+            margin: 20px 0;
+            border: 3px solid white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .tech-image:hover {
+            transform: rotate(-3deg) scale(1.02);
+        }
+
+        /* 动态元素 */
+        .bubble {
+            position: absolute;
+            background: radial-gradient(circle, var(--cyan), var(--blue));
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.3;
+            animation: float 6s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* 按钮样式 */
+        .action-btn {
+            background: linear-gradient(135deg, var(--blue), var(--cyan));
+            color: white;
+            padding: 12px 35px;
+            border-radius: 30px;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,174,255,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="dynamic-bg">
+        <div class="bubble" style="top:20%; left:10%"></div>
+        <div class="bubble" style="top:60%; right:15%"></div>
+    </div>
+
+    <div class="container">
+        <h1 class="section-title">未来进行时</h1>
+        <!-- 全幅图片区块 -->
+        <div class="full-section">
+            <img src="./picture/all.jpg" alt="未来城市" class="tech-image">
+            <h2 class="section-title">青春筑未来</h2>
+            <p>
+                在22世纪的城市蓝图中，中国青年工程师正勾勒突破物理法则的智慧生态：生物混合AI——
+                将城市电网与植物光合作用量子态耦合，使深圳湾超级总部通过榕树气孔实现85%建筑供电；复旦神经拟态
+                实验室构建的城市数字孪生体，植入类脑芯片自主学习《考工记》营造智慧，可实时重构建筑拓扑结构——上海外滩万国建筑群正演化为可呼吸的
+                活体遗产。更具革命性的是中科大墨子团队提出的跨维度治理协议，通过量子纠缠同步元宇宙镜像城市，
+                提前48小时预演暴雨内涝并生成疏解方案，在2035年长江流域极端气候中挽救23万居民。这些构想正突破技术边疆：
+                清华“庄周”项目试图将《山海经》神兽生态智慧编码为城市算法，让成都天府绿道自主演化出吸收PM2.5的植物基因链；
+                杭电团队则设想用光子晶体重构《清明上河图》空间语法，使杭州运河沿岸商铺能像生物细胞般自主迁移重组。最富想象力的当属南大
+                “太虚”计划——通过脑机接口让整座城市具备集体情感认知，当传感器捕捉到市民焦虑指数超标时，秦淮河畔的智能雾霾会实时释放镇静因子。
+                这些尚未落地的青年创想，正在实验室的量子计算机中孕育着文明跃迁的种子。
+            </p>
+        </div>
+        <div class="card-grid">
+            <!-- 卡片1：AI实验室 -->
+            <div class="card">
+                <img src="./picture/交流.jpg" alt="AI实验室" class="tech-image">
+                <h3>智能实验室</h3>
+                <p>00后研发团队正在训练能理解人类情感的AI助手...</p>
+                <a href="AIsprek1.html" >
+                    <button class="action-btn" >探索更多</button>
+                </a>
+            </div>
+
+            <!-- 卡片2：编程青年 -->
+            <div class="card">
+                <img src="./picture/game.jpg" alt="编程青年" class="tech-image">
+                <h3>代码创想家</h3>
+                <p>大学生开发者社区每周诞生30+创新项目...</p>
+                <a href="AIsprek1.html" >
+                    <button class="action-btn" >立即加入</button>
+                </a>
+            </div>
+
+            <!-- 卡片3：机器人 -->
+            <div class="card">
+                <img src="./picture/tech2.jpg" alt="智能机器人" class="tech-image">
+                <h3>机械伙伴</h3>
+                <p>新一代服务机器人已进驻50+校园...</p>
+                <a href="AIsprek1.html" >
+                    <button class="action-btn" >查看详情</button>
+                </a>
+            </div>
+            <!-- 卡片3：医疗 -->
+            <div class="card">
+                <img src="./picture/avatar1.jpg" alt="智能机器人" class="tech-image">
+                <h3>医疗诊断与个性化治疗</h3>
+                <p>通过深度学习分析医学影像，AI可快速识别早期癌症、心血管病变等</p>
+                <a href="AIsprek1.html" >
+                    <button class="action-btn" >查看详情</button>
+                </a>
+            </div>
+            <!-- 卡片3：教育-->
+            <div class="card">
+                <img src="./picture/teacher.jpg" alt="智能机器人" class="tech-image">
+                <h3> 教育个性化与自适应学习</h3>
+                <p>
+                    AI根据学生行为数据动态调整教学内容，情感计算技术评估学习情绪，降低辍学率等</p>
+                <a href="AIsprek1.html" >
+                    <button class="action-btn" >探索更多</button>
+                </a>
+            </div>
+            <!-- 食品 -->
+            <div class="card">
+                <img src="./picture/agriculture.jpg" alt="智能机器人" class="tech-image">
+                <h3>农业精准化与粮食安全</h3>
+                <p>AI结合无人机与卫星遥感，实现作物病虫害早期预警和产量预测。 </p> 
+                <a href="AIsprek1.html" >
+                <button class="action-btn" >立即加入</button>
+                </a>
+            </div>
+        </div>
+
+      
+    </div>
+</body>
+</html>
